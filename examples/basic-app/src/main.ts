@@ -3,12 +3,14 @@ import { createRouter, Router, Link } from '@rocketcode/router';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { CounterPage } from './pages/CounterPage';
+import { TestPage } from './pages/TestPage';
 
 // Define routes
 const routes = [
   { path: '/', component: HomePage, exact: true },
   { path: '/about', component: AboutPage },
-  { path: '/counter', component: CounterPage }
+  { path: '/counter', component: CounterPage },
+  { path: '/test', component: TestPage }
 ];
 
 // Create router
@@ -16,13 +18,18 @@ createRouter(routes);
 
 // Main App component
 function App() {
-  return createElement('div', { className: 'container' },
-    createElement('nav', null,
-      createElement(Link, { to: '/', className: 'nav-link' }, 'Home'),
-      createElement(Link, { to: '/about', className: 'nav-link' }, 'About'),
-      createElement(Link, { to: '/counter', className: 'nav-link' }, 'Counter')
-    ),
-    createElement(Router, { routes })
+  return createElement(Router, { routes },
+    createElement('div', { className: 'container' },
+      createElement('nav', null,
+        createElement(Link, { to: '/', className: 'nav-link' }, 'Home'),
+        createElement(Link, { to: '/about', className: 'nav-link' }, 'About'),
+        createElement(Link, { to: '/counter', className: 'nav-link' }, 'Counter'),
+        createElement(Link, { to: '/test', className: 'nav-link' }, 'Test')
+      ),
+      createElement('main', null,
+        createElement(Router, { routes })
+      )
+    )
   );
 }
 

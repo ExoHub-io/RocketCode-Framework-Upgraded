@@ -1,7 +1,13 @@
 import { VNode, RenderOptions } from './types';
 import { setCurrentVNode } from './hooks';
 
+let currentContainer: HTMLElement | null = null;
+let currentRootVNode: VNode | null = null;
+
 export function render(vnode: VNode, container: HTMLElement, options: RenderOptions = { container }): void {
+  currentContainer = container;
+  currentRootVNode = vnode;
+
   // Clear container
   if (!options.hydrate) {
     container.innerHTML = '';
@@ -32,15 +38,30 @@ function createDOMElement(vnode: VNode): HTMLElement | Text | null {
     return textNode;
   }
 
-  // Handle functional components
+  // Handle components
   if (typeof vnode.type === 'function') {
-    const component = new (vnode.type as any)(vnode.props);
-    vnode.component = component;
-    component._vnode = vnode;
+    let childVNode;
     
-    const childVNode = component.render();
+    // Set current vnode for hooks before calling component
+    setCurrentVNode(vnode);
+    
+    if (vnode.type.prototype && typeof vnode.type.prototype.render === 'function') {
+      // Class component
+      const component = new (vnode.type as any)(vnode.props);
+      vnode.component = component;
+      component._vnode = vnode;
+      childVNode = component.render();
+    } else {
+      // Functional component
+      childVNode = (vnode.type as any)(vnode.props);
+    }
+    
     const dom = createDOMElement(childVNode);
     vnode.dom = dom || undefined;
+    
+    // Clear current vnode after component execution and DOM creation
+    setCurrentVNode(null);
+    
     return dom;
   }
 
@@ -128,5 +149,12 @@ export function updateDOM(oldVNode: VNode, newVNode: VNode): void {
 
     // Update children (simplified)
     // In a real implementation, you would diff children properly
+  }
+}
+
+// Function to trigger re-render
+export function forceUpdate(): void {
+  if (currentRootVNode && currentContainer) {
+    render(currentRootVNode, currentContainer);
   }
 } 

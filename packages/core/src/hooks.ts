@@ -86,4 +86,8 @@ export function useEffect(
 export function setCurrentVNode(vnode: VNode | null): void {
   currentVNode = vnode;
   currentHookIndex = 0;
+}
+
+export function getCurrentVNode(): VNode | null {
+  return currentVNode;
 } 

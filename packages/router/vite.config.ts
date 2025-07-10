@@ -9,11 +9,9 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`
     },
     rollupOptions: {
-      external: ['@rocketcode/core'],
+      external: [],
       output: {
-        globals: {
-          '@rocketcode/core': 'RocketCodeCore'
-        }
+        globals: {}
       }
     },
     sourcemap: true,
@@ -21,7 +19,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
+      '@rocketcode/core': resolve(__dirname, '../core/src')
     }
   }
 }); 

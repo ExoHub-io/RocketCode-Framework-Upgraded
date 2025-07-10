@@ -2,7 +2,7 @@
 export { createElement, Fragment } from './createElement';
 export { useState, useEffect } from './hooks';
 export { Component } from './Component';
-export { render, updateDOM } from './render';
+export { render, updateDOM, forceUpdate } from './render';
 
 // Types
 export type {

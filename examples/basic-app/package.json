@@ -8,8 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rocketcode/core": "workspace:*",
-    "@rocketcode/router": "workspace:*"
+    "@rocketcode/core": "file:../../packages/core",
+    "@rocketcode/router": "file:../../packages/router"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

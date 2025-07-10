@@ -1,5 +1,6 @@
 import { useState, useEffect } from '@rocketcode/core';
 import { Route, RouterState, RouterContext, MatchResult } from './types';
+import { forceUpdate } from '@rocketcode/core';
 
 class Router {
   private state: RouterState;
@@ -37,6 +38,8 @@ class Router {
 
   private notifyListeners(): void {
     this.listeners.forEach(listener => listener());
+    // Force re-render of the app
+    forceUpdate();
   }
 
   public subscribe(listener: () => void): () => void {

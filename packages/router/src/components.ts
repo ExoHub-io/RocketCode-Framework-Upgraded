@@ -1,13 +1,15 @@
 import { createElement } from '@rocketcode/core';
 import { LinkProps, RouteProps, RouterProps } from './types';
-import { useRouter, getRouter } from './Router';
+import { getRouter, createRouter } from './Router';
 
 export function Link(props: LinkProps) {
-  const router = useRouter();
+  const router = getRouter();
 
   const handleClick = (e: Event) => {
     e.preventDefault();
-    router.push(props.to);
+    if (router) {
+      router.push(props.to);
+    }
     
     if (props.onClick) {
       props.onClick(e);
@@ -23,17 +25,20 @@ export function Link(props: LinkProps) {
 }
 
 export function Route(props: RouteProps) {
-  const router = useRouter();
-  const match = router.pathname === props.path;
+  const router = getRouter();
+  if (!router) return null;
+  
+  const state = router.getState();
+  const match = state.pathname === props.path;
 
   if (!match) {
     return null;
   }
 
   return createElement(props.component, {
-    ...router,
-    params: router.params,
-    query: router.query
+    ...router.getContext(),
+    params: state.params,
+    query: state.query
   });
 }
 
@@ -42,7 +47,6 @@ export function Router(props: RouterProps) {
   
   if (!router) {
     // Initialize router if not already done
-    const { createRouter } = require('./Router');
     createRouter(props.routes, props.initialPath);
   }
 

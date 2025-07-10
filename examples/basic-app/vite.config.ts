@@ -9,7 +9,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
+      '@rocketcode/core': resolve(__dirname, '../../packages/core/dist/index.js'),
+      '@rocketcode/router': resolve(__dirname, '../../packages/router/dist/index.js'),
+      '@rocketcode/ssr': resolve(__dirname, '../../packages/ssr/dist/index.js')
     }
   },
   server: {

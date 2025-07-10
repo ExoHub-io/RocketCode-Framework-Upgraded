@@ -2,7 +2,6 @@
   "name": "@rocketcode/core",
   "version": "1.0.0",
   "description": "Core rendering engine for RocketCode Framework",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -16,6 +15,8 @@
       "types": "./dist/jsx-runtime.d.ts"
     }
   },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "scripts": {
     "build": "vite build",
     "dev": "vite build --watch",

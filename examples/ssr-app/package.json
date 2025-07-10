@@ -8,9 +8,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@rocketcode/core": "workspace:*",
-    "@rocketcode/router": "workspace:*",
-    "@rocketcode/ssr": "workspace:*",
+    "@rocketcode/core": "file:../../packages/core",
+    "@rocketcode/router": "file:../../packages/router",
+    "@rocketcode/ssr": "file:../../packages/ssr",
     "express": "^4.18.0"
   },
   "devDependencies": {
